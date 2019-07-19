@@ -36,7 +36,8 @@ public class ECTyperPlugin extends Plugin {
 		@Override
 		public Optional<AnalysisSampleUpdater> getUpdater(MetadataTemplateService metadataTemplateService,
 				SampleService sampleService, IridaWorkflowsService iridaWorkflowsService) throws IridaPluginException {
-			return Optional.empty();
+			/**return Optional.empty();**/
+			return Optional.of(new ECTyperUpdater(metadataTemplateService, sampleService, iridaWorkflowsService));
 		}
 
 		@Override
