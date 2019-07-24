@@ -6,14 +6,14 @@
 
 	<groupId>ca.corefacility.bioinformatics.irida.plugin.serotyping</groupId>
 	<artifactId>ectyper-plugin</artifactId>
-	<version>1.0.0</version>
+	<version>0.8.1</version>
 
 	<!-- Please fill out these properties with information about your particular plugin -->
 	<properties>
 		<!-- Information used to define properties about a plugin. Please see the PF4J docs for more details https://pf4j.org/doc/getting-started.html -->
 		<plugin.id>ectyper-plugin</plugin.id>
 		<plugin.class>ca.corefacility.bioinformatics.irida.plugin.serotyping.ECTyperPlugin</plugin.class>
-		<plugin.version>1.0.0</plugin.version>
+		<plugin.version>0.8.1</plugin.version>
 		<plugin.provider>Kyrylo Bessonov</plugin.provider>
 		<plugin.dependencies></plugin.dependencies>
 		<plugin.requires.runtime>1.0.0</plugin.requires.runtime>
