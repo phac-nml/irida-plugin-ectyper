@@ -47,12 +47,12 @@ public class ECTyperPlugin extends Plugin {
 
 		@Override
 		public UUID getDefaultWorkflowUUID() {
-			return UUID.fromString("c9f4a5e8-4419-4f2e-8d39-e446bcd967af");
+			return UUID.fromString("d5127a98-11f9-4730-a67b-96940804e86f");
 		}
 
 		@Override
 		public Optional<Color> getBackgroundColor() {
-			return Optional.of(Color.decode("#66c2a4"));
+			return Optional.of(Color.decode("#ff4b4c"));
 		}
 	}
 }
