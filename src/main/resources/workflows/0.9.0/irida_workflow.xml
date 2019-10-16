@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iridaWorkflow>
+  <id>95737aa1-f227-4a40-af85-4b3182ede5d7</id>
+  <name>ECTYPER</name>
+  <version>0.9.0</version>
+  <analysisType>ECTYPER</analysisType>
+  <inputs>
+    <sequenceReadsPaired>sequence_reads_paired</sequenceReadsPaired>
+    <requiresSingleSample>true</requiresSingleSample>
+  </inputs>
+  <parameters>
+    <!--parameter name="shovill-1-library.lib_type" defaultValue="collection">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="library.lib_type"/>
+    </parameter-->
+    <parameter name="shovill-1-adv.nocorr" defaultValue="false">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.nocorr"/>
+    </parameter>
+    <parameter name="shovill-1-adv.mincov" defaultValue="0">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.mincov"/>
+    </parameter>
+    <parameter name="shovill-1-trim" defaultValue="true">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="trim"/>
+    </parameter>
+    <parameter name="shovill-1-adv.namefmt" defaultValue="contig%05d">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.namefmt"/>
+    </parameter>
+    <parameter name="shovill-1-adv.depth" defaultValue="0">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.depth"/>
+    </parameter>
+    <parameter name="shovill-1-log" defaultValue="true">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="log"/>
+    </parameter>
+    <parameter name="shovill-1-adv.gsize" defaultValue="5000000">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.gsize"/>
+    </parameter>
+    <parameter name="shovill-1-adv.kmers" defaultValue="">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.kmers"/>
+    </parameter>
+    <parameter name="shovill-1-adv.opts" defaultValue="">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.opts"/>
+    </parameter>
+    <parameter name="shovill-1-adv.minlen" defaultValue="0">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="adv.minlen"/>
+    </parameter>
+    <!--parameter name="shovill-1-assembler" defaultValue="spades">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4" parameterName="assembler"/>
+    </parameter-->
+    <parameter name="ectyper-2-adv_param.alleleSequence" defaultValue="false">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.9.0" parameterName="adv_param.alleleSequence"/>
+    </parameter>
+    <!--parameter name="ectyper-2-adv_param.logging" defaultValue="true">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.9.0" parameterName="adv_param.logging"/>
+    </parameter-->
+    <parameter name="ectyper-2-adv_param.min_percentIdentity" defaultValue="90">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.9.0" parameterName="adv_param.min_percentIdentity"/>
+    </parameter>
+    <parameter name="ectyper-2-adv_param.percentLength" defaultValue="10">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.9.0" parameterName="adv_param.percentLength"/>
+    </parameter>
+    <!--parameter name="ectyper-2-adv_param.verifyEcoli" defaultValue="true">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.9.0" parameterName="adv_param.verifyEcoli"/>
+    </parameter-->
+  </parameters>
+  <outputs>
+    <output name="ectyper log file" fileName="ectyper.log"/>
+    <output name="serotyping report" fileName="report_ectyper.txt"/>
+  </outputs>
+  <toolRepositories>
+    <repository>
+      <name>shovill</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>865119fcb694</revision>
+    </repository>
+    <repository>
+      <name>ectyper</name>
+      <owner>nml</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>e79a8dad83b4</revision>
+    </repository>
+  </toolRepositories>
+</iridaWorkflow>
+
