@@ -67,17 +67,22 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 	/**
 	 * Gets the staramr results from the given output file.
 	 * 
-	 * @param ectyperreportFilePath The staramr output file containing the results.
+	 * @param ectyperreportFilePath The ectyper output file (report_ectyper.txt) containing the results.
 	 * @return A {@link ECTYPERResult} storing the results from ectyper as
 	 *         {@link String}s.
 	 * @throws IOException             If there was an issue reading the file.
 	 * @throws PostProcessingException If there was an issue parsing the file.
-	 *private AMRResult getECTYPERResults(Path staramrFilePath) throws IOException, PostProcessingException { 
 	*/
 	private ECTYPERResult getECTYPERResults(Path ectyperreportFilePath) throws IOException, PostProcessingException { 
-		final int OTYPE_INDEX = 1;
-		final int HTYPE_INDEX = 2;
-		/*final int DRUG_INDEX = 2;*/
+		final int SPECIES_INDEX = 1;
+		final int OTYPE_INDEX = 2;
+		final int HTYPE_INDEX = 3;
+		final int SEROTYPE_INDEX = 4;
+		final int QCFLAG_INDEX = 5;
+		final int CONFIDENCE_INDEX = 6;
+		final int EVIDENCE_INDEX = 7;
+		final int ALLELES_INDEX = 8;
+		final int WARNINGS_INDEX = 9;
 		final int MAX_TOKENS = 10;
 
 		@SuppressWarnings("resource")
@@ -88,15 +93,22 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 
 		line = reader.readLine();
 		tokens = SPLITTER.splitToList(line);
+		String species = tokens.get(SPECIES_INDEX);
 		String otype = tokens.get(OTYPE_INDEX);
 		String htype = tokens.get(HTYPE_INDEX);
+		String serotype = tokens.get(SEROTYPE_INDEX);
+		String qcflag = tokens.get(QCFLAG_INDEX);
+		String confidencelevel = tokens.get(CONFIDENCE_INDEX);
+		String evidence = tokens.get(EVIDENCE_INDEX);
+		String alleles = tokens.get(ALLELES_INDEX);
+		String warnings = tokens.get(WARNINGS_INDEX);
 
 		line = reader.readLine();
 
 		if (line == null) {
-			return new ECTYPERResult(otype, htype);
+			return new ECTYPERResult(species, otype, htype, serotype, qcflag, confidencelevel, evidence, alleles, warnings);
 		} else {
-			throw new PostProcessingException("Invalid ectyper results file [" + ectyperreportFilePath + "], expected only single line of results but got multiple lines");
+			throw new PostProcessingException("Invalid ectyper results file [" + ectyperreportFilePath + "], expected only single line of results but got empty file.");
 		}
 	}
 
@@ -124,18 +136,35 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 
 			ECTYPERResult ectyperResult = getECTYPERResults(ectyperreportFilePath);
 			
-
+			PipelineProvidedMetadataEntry ectyperSpeciesEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getSpecies(), "text", analysis);
 			PipelineProvidedMetadataEntry ectyperOtypeEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getOtype(), "text", analysis);
 			PipelineProvidedMetadataEntry ectyperHtypeEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getHtype(), "text", analysis);
 			PipelineProvidedMetadataEntry ectyperSerotypeEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getSerotype(), "text", analysis);
-			
+			PipelineProvidedMetadataEntry ectyperQCflagEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getQCflag(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperConfidenceLevelEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getConfidenceLevel(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperEvidenceTypeEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getEvidenceType(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperAllelesEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getAlleles(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperWarningsEntry = new PipelineProvidedMetadataEntry(
+					ectyperResult.getWarnings(), "text", analysis);
+
 			/*Write results to the metadata of project*/
-			stringEntries.put(appendVersion("ECTYPER O-antigen", workflowVersion), ectyperOtypeEntry);
-			stringEntries.put(appendVersion("ECTYPER H-antigen", workflowVersion), ectyperHtypeEntry);
-			stringEntries.put(appendVersion("ECTYPER Serotype",  workflowVersion), ectyperSerotypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-1-Species", workflowVersion), ectyperSpeciesEntry);
+			stringEntries.put(appendVersion("ECTYPER-2-O-antigen", workflowVersion), ectyperOtypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-3-H-antigen", workflowVersion), ectyperHtypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-4-Serotype",  workflowVersion), ectyperSerotypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-5-QCFlag",    workflowVersion), ectyperQCflagEntry);
+			stringEntries.put(appendVersion("ECTYPER-6-Alleles",  workflowVersion), ectyperAllelesEntry);
+			stringEntries.put(appendVersion("ECTYPER-7-ConfidenceLevel",  workflowVersion), ectyperConfidenceLevelEntry);
+			stringEntries.put(appendVersion("ECTYPER-8-Evidence Type",  workflowVersion), ectyperEvidenceTypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-9-Warnings",  workflowVersion), ectyperWarningsEntry);
 
 			Map<MetadataTemplateField, MetadataEntry> metadataMap = metadataTemplateService
 					.getMetadataMap(stringEntries);
@@ -169,26 +198,54 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 	 * Class used to store together data extracted from the ectyper tab-result files.
 	 */
 	private class ECTYPERResult  {
+		private String species;
 		private String otype;
 		private String htype;
 		private String serotype;
+		private String qcflag;
+		private String confidencelevel;
+		private String evidence;
+		private String alleles;
+		private String warnings;
 
-		public ECTYPERResult(String otype, String htype) {
+		public ECTYPERResult(String species, String otype, String htype, String serotype, String qcflag, String confidencelevel, String evidence, String alleles, String warnings) {
+			this.species = species;
 			this.otype = otype;
 			this.htype = htype;
 			this.serotype = serotype;
+			this.qcflag = qcflag;
+			this.confidencelevel = confidencelevel;
+			this.evidence = evidence;
+			this.alleles = alleles;
+			this.warnings = warnings;
 		}
 
+		public String getSpecies() {
+			return species;
+		}
 		public String getOtype() {
 			return otype;
 		}
-
 		public String getHtype() {
 			return htype;
 		}
-
 		public String getSerotype(){
-			return otype+":"+htype;
+			return serotype;
+		}
+		public String getQCflag(){
+		    return qcflag;
+		}
+		public String getConfidenceLevel(){
+		    return confidencelevel;
+		}
+		public String getEvidenceType(){
+		    return evidence;
+		}
+		public String getAlleles(){
+		    return alleles;
+		}
+		public String getWarnings(){
+		    return warnings;
 		}
 	}
 
