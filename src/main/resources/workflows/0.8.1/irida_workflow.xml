@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iridaWorkflow>
+  <id>d5127a98-11f9-4730-a67b-96940804e86f</id>
+  <name>ECTYPER</name>
+  <version>0.8.1</version>
+  <analysisType>ECTYPER</analysisType>
+  <inputs>
+    <sequenceReadsPaired>sequence_reads_paired</sequenceReadsPaired>
+    <requiresSingleSample>true</requiresSingleSample>
+  </inputs>
+  <parameters>
+    <parameter name="ectyper-2-adv_param.alleleSequence" defaultValue="false">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.8.1" parameterName="adv_param.alleleSequence"/>
+    </parameter>
+    <parameter name="ectyper-2-adv_param.min_percentIdentity" defaultValue="90">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.8.1" parameterName="adv_param.min_percentIdentity"/>
+    </parameter>
+    <parameter name="ectyper-2-adv_param.percentLength" defaultValue="50">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.8.1" parameterName="adv_param.percentLength"/>
+    </parameter>
+    <!--parameter name="ectyper-2-adv_param.verifyEcoli" defaultValue="false">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/0.8.1" parameterName="adv_param.verifyEcoli"/>
+    </parameter-->
+  </parameters>
+  <outputs>
+    <output name="serotyping report" fileName="report_ectyper.txt"/>
+    <output name="ectyper log file" fileName="ectyper.log"/>
+  </outputs>
+  <toolRepositories>
+    <repository>
+      <name>ectyper</name>
+      <owner>nml</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>b02c775b27c8</revision>
+    </repository>
+    <repository>
+      <name>concatenate_multiple_datasets</name>
+      <owner>artbio</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>55cf9d9defd1</revision>
+    </repository>
+  </toolRepositories>
+</iridaWorkflow>
