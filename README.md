@@ -60,7 +60,23 @@ If you have previously [setup IRIDA][irida-setup] before you may copy this JAR f
 
 The following dependencies are required in order to make use of this plugin.
 
-* [IRIDA][] >= 19.01.3
-* [Java][] >= 1.8 and [Maven][maven] (for building)
+* IRIDA >= 19.01.3
+* Java >= 1.8 and [Maven][maven] (for building)
+* Galaxy >= 16.01
+* Shovill == 1.0.4
+* ECTYPER == 0.9.0
+
+# Galaxy configuration
+The plugin assumes a properly configured Galaxy instance that will run the workflow included in the plugin.
+For this version of the plugin, the backend Galaxy instance needs to have the following installed via the Admin interface:
+* Shovill
+  * version 1.0.4
+  * revision 3:865119fcb694
+  * published 2018-11-13
+  
+* ECTYPER
+  * version 0.9.0
+  * revision 2:e79a8dad83b4
+  * published 2019-01-03
 
 
