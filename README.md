@@ -71,7 +71,11 @@ The plugin allows for automatic IRIDA project metadata population. E.g. sample15
 
 After successfull installation, plugin should appear in list of available pipilines. If not, check web-server log files for errors (e.g. Tomcat 7 logs `/var/log/tomcat7/catalina.out`)
 
-![](./pics/ectyper-pipeline-tile.png)
+<p align="center">
+  <img src="./pics/ectyper-pipeline-tile.png">
+</p>
+
+
 
 
 
