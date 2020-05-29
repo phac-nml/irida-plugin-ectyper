@@ -47,7 +47,7 @@ public class ECTyperPlugin extends Plugin {
 
 		@Override
 		public UUID getDefaultWorkflowUUID() {
-			return UUID.fromString("95737aa1-f227-4a40-af85-4b3182ede5d7");
+			return UUID.fromString("79872edb-4f3b-4a51-aff7-33ddbc05ec5e");
 		}
 
 		@Override

@@ -65,7 +65,7 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 	}
 
 	/**
-	 * Gets the staramr results from the given output file.
+	 * Gets the ectyper results from the given output.tsv file.
 	 * 
 	 * @param ectyperreportFilePath The ectyper output file (report_ectyper.txt) containing the results.
 	 * @return A {@link ECTYPERResult} storing the results from ectyper as
@@ -79,11 +79,13 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 		final int HTYPE_INDEX = 3;
 		final int SEROTYPE_INDEX = 4;
 		final int QCFLAG_INDEX = 5;
-		final int CONFIDENCE_INDEX = 6;
-		final int EVIDENCE_INDEX = 7;
-		final int ALLELES_INDEX = 8;
-		final int WARNINGS_INDEX = 9;
-		final int MAX_TOKENS = 10;
+		final int EVIDENCE_INDEX = 6;
+		final int GENESCORES_INDEX = 7;
+		final int IDENTITIES_INDEX = 9;
+		final int COVERAGES_INDEX = 10;
+		final int DATABASE_VER_INDEX = 14;
+		final int WARNINGS_INDEX = 15;
+		final int MAX_TOKENS = 12;
 
 		@SuppressWarnings("resource")
 		BufferedReader reader = new BufferedReader(new FileReader(ectyperreportFilePath.toFile()));
@@ -98,15 +100,18 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 		String htype = tokens.get(HTYPE_INDEX);
 		String serotype = tokens.get(SEROTYPE_INDEX);
 		String qcflag = tokens.get(QCFLAG_INDEX);
-		String confidencelevel = tokens.get(CONFIDENCE_INDEX);
 		String evidence = tokens.get(EVIDENCE_INDEX);
-		String alleles = tokens.get(ALLELES_INDEX);
+		String genescores = tokens.get(GENESCORES_INDEX);
+		String identities = tokens.get(IDENTITIES_INDEX);
+		String coverages = tokens.get(COVERAGES_INDEX);
+		String dbver = tokens.get(DATABASE_VER_INDEX);
 		String warnings = tokens.get(WARNINGS_INDEX);
 
 		line = reader.readLine();
 
 		if (line == null) {
-			return new ECTYPERResult(species, otype, htype, serotype, qcflag, confidencelevel, evidence, alleles, warnings);
+			return new ECTYPERResult(species, otype, htype, serotype, qcflag, evidence, genescores, 
+				identities, coverages, dbver, warnings);
 		} else {
 			throw new PostProcessingException("Invalid ectyper results file [" + ectyperreportFilePath + "], expected only single line of results but got empty file.");
 		}
@@ -146,12 +151,17 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 					ectyperResult.getSerotype(), "text", analysis);
 			PipelineProvidedMetadataEntry ectyperQCflagEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getQCflag(), "text", analysis);
-			PipelineProvidedMetadataEntry ectyperConfidenceLevelEntry = new PipelineProvidedMetadataEntry(
-					ectyperResult.getConfidenceLevel(), "text", analysis);
 			PipelineProvidedMetadataEntry ectyperEvidenceTypeEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getEvidenceType(), "text", analysis);
-			PipelineProvidedMetadataEntry ectyperAllelesEntry = new PipelineProvidedMetadataEntry(
-					ectyperResult.getAlleles(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperGeneScores = new PipelineProvidedMetadataEntry(
+					ectyperResult.getGeneScores(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperIdentities = new PipelineProvidedMetadataEntry(
+					ectyperResult.getIdentities(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperCoverages = new PipelineProvidedMetadataEntry(
+					ectyperResult.getCoverages(), "text", analysis);
+			PipelineProvidedMetadataEntry ectyperDatabase = new PipelineProvidedMetadataEntry(
+					ectyperResult.getDatabaseVersion(), "text", analysis);
+
 			PipelineProvidedMetadataEntry ectyperWarningsEntry = new PipelineProvidedMetadataEntry(
 					ectyperResult.getWarnings(), "text", analysis);
 
@@ -161,10 +171,12 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 			stringEntries.put(appendVersion("ECTYPER-3-H-antigen", workflowVersion), ectyperHtypeEntry);
 			stringEntries.put(appendVersion("ECTYPER-4-Serotype",  workflowVersion), ectyperSerotypeEntry);
 			stringEntries.put(appendVersion("ECTYPER-5-QCFlag",    workflowVersion), ectyperQCflagEntry);
-			stringEntries.put(appendVersion("ECTYPER-6-Alleles",  workflowVersion), ectyperAllelesEntry);
-			stringEntries.put(appendVersion("ECTYPER-7-ConfidenceLevel",  workflowVersion), ectyperConfidenceLevelEntry);
-			stringEntries.put(appendVersion("ECTYPER-8-Evidence Type",  workflowVersion), ectyperEvidenceTypeEntry);
-			stringEntries.put(appendVersion("ECTYPER-9-Warnings",  workflowVersion), ectyperWarningsEntry);
+			stringEntries.put(appendVersion("ECTYPER-6-Evidence Type",  workflowVersion), ectyperEvidenceTypeEntry);
+			stringEntries.put(appendVersion("ECTYPER-7-GeneScores",  workflowVersion), ectyperGeneScores);
+			stringEntries.put(appendVersion("ECTYPER-8-Identities",  workflowVersion), ectyperIdentities);
+			stringEntries.put(appendVersion("ECTYPER-9-Coverages",  workflowVersion), ectyperCoverages);
+			stringEntries.put(appendVersion("ECTYPER-10-Database",  workflowVersion), ectyperDatabase);
+			stringEntries.put(appendVersion("ECTYPER-11-Warnings",  workflowVersion), ectyperWarningsEntry);
 
 			Map<MetadataTemplateField, MetadataEntry> metadataMap = metadataTemplateService
 					.getMetadataMap(stringEntries);
@@ -203,20 +215,26 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 		private String htype;
 		private String serotype;
 		private String qcflag;
-		private String confidencelevel;
 		private String evidence;
-		private String alleles;
+		private String genescores;
+		private String identities;
+		private String coverages;
+		private String dbver;
 		private String warnings;
 
-		public ECTYPERResult(String species, String otype, String htype, String serotype, String qcflag, String confidencelevel, String evidence, String alleles, String warnings) {
+		public ECTYPERResult(String species, String otype, String htype, String serotype, 
+			String qcflag,  String evidence, String genescores, String identities, String coverages,
+			String dbver, String warnings) {
 			this.species = species;
 			this.otype = otype;
 			this.htype = htype;
 			this.serotype = serotype;
 			this.qcflag = qcflag;
-			this.confidencelevel = confidencelevel;
 			this.evidence = evidence;
-			this.alleles = alleles;
+			this.genescores = genescores;
+			this.identities = identities;
+			this.coverages = coverages;
+			this.dbver = dbver;
 			this.warnings = warnings;
 		}
 
@@ -235,14 +253,20 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 		public String getQCflag(){
 		    return qcflag;
 		}
-		public String getConfidenceLevel(){
-		    return confidencelevel;
-		}
 		public String getEvidenceType(){
 		    return evidence;
 		}
-		public String getAlleles(){
-		    return alleles;
+		public String getGeneScores(){
+		    return genescores;
+		}
+		public String getIdentities(){
+		    return identities;
+		}
+		public String getCoverages(){
+		    return coverages;
+		}
+		public String getDatabaseVersion(){
+		    return dbver;
 		}
 		public String getWarnings(){
 		    return warnings;
