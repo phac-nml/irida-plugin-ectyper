@@ -65,10 +65,12 @@ For this version of the plugin, the backend Galaxy instance needs to have the fo
 A couple of illustrations demonstrating plugin in action.
 
 ### Automatic metadata population
-The plugin allows for automatic IRIDA project metadata population. E.g. sample15 typing shows species, database version, QC flag and antigen gene scores.
+The plugin allows for automatic IRIDA project metadata population. E.g. sample15 typing shows species, QC flag, antigen gene scores and other features.
+
 ![](./pics/ectyper-metadata-iridaproject.png)
 
 After successfull installation, plugin should appear in list of available pipilines. If not, check web-server log files for errors (e.g. Tomcat 7 logs `/var/log/tomcat7/catalina.out`)
+
 ![](./pics/ectyper-pipeline-tile.png)
 
 
