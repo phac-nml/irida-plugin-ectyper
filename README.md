@@ -1,8 +1,8 @@
 # IRIDA ecTyper Plugin for E.coli serotyping
 This new IRIDA plugin allows deploying ecTyper, a tool for in silico E.coli serotyping, in IRIDA platform.
 
-The tool can not only type E.coli, but also identify other non-E.coli species. It can effectively discriminate between E.coli and Shigella and E.albertii.
-This tool is readily installable by the placement of the `*.jar` file (see releases section) in `/etc/irida/plugins` directory. New pipeline should appear after IRIDA restart. 
+The tool can not only in silico sertypes E.coli samples, but also discriminates other non-E.coli samples. It can effectively discriminate between E.coli and Shigella and E.albertii.
+This tool is readily installable by the placement of the `*.jar` file (see releases section) in `/etc/irida/plugins` directory. After IRIDA webserver restart, the new pipeline should appear. 
 
 # Features
 New to version 1.0.0 incorporates
@@ -16,8 +16,8 @@ New to version 1.0.0 incorporates
 
 # Building plugin
 
-Building and packaging this code is accomplished using [Apache Maven](http://maven.apache.org/download.cgi). However, you will first need to install [IRIDA](https://github.com/phac-nml/irida) to your local Maven repository. The version of IRIDA you install will have to correspond to the version found in the `irida.version.compiletime` property in the [pom.xml](https://github.com/phac-nml/irida-plugin-ectyper/blob/master/pom.xml) file of this project. Right now, this is IRIDA version `19.01.3`. To build successfully plugin there is a need to compile IRIDA corresponding to version specified in `pom.xml`. 
-Here is the a brief workflow to compile new `*.jar` file from the source code 
+Building and packaging this code is accomplished using [Apache Maven](http://maven.apache.org/download.cgi). However, you will first need to install [IRIDA](https://github.com/phac-nml/irida) to your local Maven repository. The version of IRIDA you install will have to correspond to the version found in the `irida.version.compiletime` property in the [pom.xml](https://github.com/phac-nml/irida-plugin-ectyper/blob/master/pom.xml) file of this project. Right now, this is IRIDA version `19.01.3`. To build successfully plugin there is a need to compile IRIDA corresponding to the version specified in `pom.xml`. 
+Here is a brief workflow to compile new `*.jar` file from the source code 
 
 ```bash
 # Build IRIDA dependencies
@@ -60,5 +60,16 @@ For this version of the plugin, the backend Galaxy instance needs to have the fo
   * revision 4:08d801182fa1
   * published 2020-05-29
   * [ToolShed direct link](https://toolshed.g2.bx.psu.edu/view/nml/ectyper/08d801182fa1)
+
+# Gallery
+A couple of illustrations demonstrating plugin in action.
+
+### Automatic metadata population
+The plugin allows for automatic IRIDA project metadata population. E.g. sample15 typing shows species, database version, QC flag and antigen gene scores.
+![](./pics/ectyper-metadata-iridaproject.png)
+
+After successfull installation, plugin should appear in list of available pipilines. If not, check web-server log files for errors (e.g. Tomcat 7 logs `/var/log/tomcat7/catalina.out`)
+![](./pics/ectyper-pipeline-tile.png)
+
 
 

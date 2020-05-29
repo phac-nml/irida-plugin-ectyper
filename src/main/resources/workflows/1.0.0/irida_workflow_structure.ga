@@ -1,0 +1,194 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "",
+    "format-version": "0.1",
+    "name": "Shovill with ecTyper v1.0.0 (imported from uploaded file)",
+    "steps": {
+        "0": {
+            "annotation": "",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "",
+                    "name": "sequence_reads_paired"
+                }
+            ],
+            "label": "sequence_reads_paired",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 200,
+                "top": 246.234375
+            },
+            "tool_id": null,
+            "tool_state": "{\"collection_type\": \"list:paired\", \"name\": \"sequence_reads_paired\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "9fc9a293-c18a-4433-82ac-6dd1c5e497a7",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "f0bb5486-46ba-4395-aaaf-44deb25504f7"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4",
+            "errors": null,
+            "id": 1,
+            "input_connections": {
+                "library|input1": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Shovill",
+                    "name": "library"
+                }
+            ],
+            "label": null,
+            "name": "Shovill",
+            "outputs": [
+                {
+                    "name": "shovill_std_log",
+                    "type": "txt"
+                },
+                {
+                    "name": "contigs",
+                    "type": "fasta"
+                },
+                {
+                    "name": "contigs_graph",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 485,
+                "top": 243.5
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/shovill/shovill/1.0.4",
+            "tool_shed_repository": {
+                "changeset_revision": "865119fcb694",
+                "name": "shovill",
+                "owner": "iuc",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"adv\": \"{\\\"depth\\\": \\\"100\\\", \\\"gsize\\\": \\\"\\\", \\\"kmers\\\": \\\"\\\", \\\"mincov\\\": \\\"2\\\", \\\"minlen\\\": \\\"0\\\", \\\"namefmt\\\": \\\"contig%05d\\\", \\\"nocorr\\\": \\\"true\\\", \\\"opts\\\": \\\"\\\"}\", \"trim\": \"\\\"false\\\"\", \"log\": \"\\\"true\\\"\", \"__page__\": null, \"__rerun_remap_job_id__\": null, \"assembler\": \"\\\"spades\\\"\", \"library\": \"{\\\"__current_case__\\\": 1, \\\"input1\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"lib_type\\\": \\\"collection\\\"}\"}",
+            "tool_version": "1.0.4",
+            "type": "tool",
+            "uuid": "a400358b-c6e7-427b-8cf7-5524e448457a",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "contigs",
+                    "uuid": "87e08867-e64b-4f1e-9d62-a274a1092744"
+                },
+                {
+                    "label": null,
+                    "output_name": "shovill_std_log",
+                    "uuid": "33bd1aa7-f9ac-45bf-a5e3-c65b9bb2a7d0"
+                },
+                {
+                    "label": null,
+                    "output_name": "contigs_graph",
+                    "uuid": "d5c5e0ee-b90c-4ce0-b3a8-a425c73adeea"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/1.0.0",
+            "errors": null,
+            "id": 2,
+            "tool_shed_repository": {
+                "owner": "nml",
+                "changeset_revision": "08d801182fa1",
+                "name": "ectyper",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "input_connections": {
+                "input": {
+                    "id": 1,
+                    "output_name": "contigs"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool ectyper",
+                    "name": "adv_param"
+                },
+                {
+                    "description": "runtime parameter for tool ectyper",
+                    "name": "adv_param"
+                }
+            ],
+            "label": null,
+            "name": "ectyper",
+            "outputs": [
+                {
+                    "name": "output_result",
+                    "type": "tabular"
+                },
+                {
+                    "name": "output_log",
+                    "type": "txt"
+                }
+            ],
+            "position": {
+                "left": 783.0625,
+                "top": 270.296875
+            },
+            "post_job_actions": {
+                "RenameDatasetActionoutput_log": {
+                    "action_arguments": {
+                        "newname": "ectyper.log"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "output_log"
+                },
+                "RenameDatasetActionoutput_result": {
+                    "action_arguments": {
+                        "newname": "report_ectyper.txt"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "output_result"
+                },
+                "TagDatasetActionoutput_result": {
+                    "action_arguments": {
+                        "tags": "results"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "output_result"
+                }
+            },
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/nml/ectyper/ectyper/1.0.0",
+            "tool_state": "{\"adv_param\": \"{\\\"blastresults\\\": \\\"false\\\", \\\"db_input\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"hpcov\\\": \\\"50\\\", \\\"hpid\\\": \\\"95\\\", \\\"logging\\\": \\\"true\\\", \\\"mash_input\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}, \\\"opcov\\\": \\\"90\\\", \\\"opid\\\": \\\"90\\\", \\\"verifyEcoli\\\": \\\"true\\\"}\", \"input\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"__rerun_remap_job_id__\": null, \"__page__\": null}",
+            "tool_version": "1.0.0",
+            "type": "tool",
+            "uuid": "6ca3b14d-5156-4e2e-b0af-75e7f961afe4",
+            "workflow_outputs": [
+                {
+                    "label": "report_ectyper",
+                    "output_name": "output_result",
+                    "uuid": "7979bf4b-5b71-451f-ab75-7a3990ba8f38"
+                },
+                {
+                    "label": "output_log",
+                    "output_name": "output_log",
+                    "uuid": "91fa3947-b1d3-4fe8-bc61-3890916d84c6"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "c67b7326-c276-4919-8cc0-1001630d790d",
+    "version": 1
+}
