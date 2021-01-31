@@ -1,11 +1,12 @@
 # IRIDA ecTyper Plugin for E.coli serotyping
-This new IRIDA plugin allows deploying ecTyper, a tool for in silico E.coli serotyping, in IRIDA platform.
+This new IRIDA plugin allows deploying ecTyper, a tool for *in silico* E.coli serotyping, in IRIDA platform.
 
-The tool can not only in silico sertypes E.coli samples, but also discriminates other non-E.coli samples. It can effectively discriminate between E.coli and Shigella and E.albertii.
+The tool *in silico* serotypes E.coli samples and performs species check to discriminate other non-E.coli samples. It can effectively discriminate between E.coli and Shigella and E.albertii.
 This tool is readily installable by the placement of the `*.jar` file (see releases section) in `/etc/irida/plugins` directory. After IRIDA webserver restart, the new pipeline should appear. 
 
+Version `1.1.1b` is identical to `1.1.1` with the only difference that it is fully compatible with `IRIDA v21.01`.
 # Features
-New to version 1.0.0 incorporates
+New to version `1.0.0` and `1.1.1b`
 
 * Quality Control module for easier assesement of results reliability and the need of any further wet-lab followup for reporting purposes
 * Automatic project metadata population for easier download and pulling via API or as a tab-delimited file
@@ -20,9 +21,10 @@ Building and packaging this code is accomplished using [Apache Maven](http://mav
 Here is a brief workflow to compile new `*.jar` file from the source code 
 
 ```bash
+IRIDA_VERSION=19.01.3
 # Build IRIDA dependencies
 git clone https://github.com/phac-nml/irida.git
-git checkout 19.01.3
+git checkout ${IRIDA_VERSION}
 #IRIDA dependencies will be located in ~/.m2
 mvn install -DskipTests 
 git clone https://github.com/phac-nml/irida-plugin-ectyper.git

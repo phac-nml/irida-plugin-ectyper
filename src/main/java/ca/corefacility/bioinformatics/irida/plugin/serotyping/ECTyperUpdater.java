@@ -180,7 +180,7 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 
 			Set<MetadataEntry> metadataSet = metadataTemplateService.convertMetadataStringsToSet(metadataEntries);
 			sampleService.mergeSampleMetadata(sample,metadataSet);
-		
+
 		} catch (IOException e) {
 			logger.error("Got IOException", e);
 			throw new PostProcessingException("Error parsing ectyper results", e);
