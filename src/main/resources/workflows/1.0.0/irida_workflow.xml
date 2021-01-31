@@ -2,7 +2,7 @@
 <iridaWorkflow>
   <id>79872edb-4f3b-4a51-aff7-33ddbc05ec5e</id>
   <name>ECTYPER</name>
-  <version>1.0.0</version>
+  <version>1.0.0b</version>
   <analysisType>ECTYPER</analysisType>
   <inputs>
     <sequenceReadsPaired>sequence_reads_paired</sequenceReadsPaired>

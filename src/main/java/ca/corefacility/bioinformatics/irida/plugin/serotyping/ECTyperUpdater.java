@@ -134,7 +134,7 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 		Path ectyperreportFilePath = ectyperAof.getFile();
 
 
-		Map<String, MetadataEntry> stringEntries = new HashMap<>();
+		Map<String, MetadataEntry> metadataEntries = new HashMap<>();
 		try {
 			IridaWorkflow iridaWorkflow = iridaWorkflowsService.getIridaWorkflow(analysis.getWorkflowId());
 			String workflowVersion = iridaWorkflow.getWorkflowDescription().getVersion();
@@ -166,23 +166,21 @@ public class ECTyperUpdater implements AnalysisSampleUpdater {
 					ectyperResult.getWarnings(), "text", analysis);
 
 			/*Write results to the metadata of project*/
-			stringEntries.put(appendVersion("ECTYPER-1-Species", workflowVersion), ectyperSpeciesEntry);
-			stringEntries.put(appendVersion("ECTYPER-2-O-antigen", workflowVersion), ectyperOtypeEntry);
-			stringEntries.put(appendVersion("ECTYPER-3-H-antigen", workflowVersion), ectyperHtypeEntry);
-			stringEntries.put(appendVersion("ECTYPER-4-Serotype",  workflowVersion), ectyperSerotypeEntry);
-			stringEntries.put(appendVersion("ECTYPER-5-QCFlag",    workflowVersion), ectyperQCflagEntry);
-			stringEntries.put(appendVersion("ECTYPER-6-Evidence Type",  workflowVersion), ectyperEvidenceTypeEntry);
-			stringEntries.put(appendVersion("ECTYPER-7-GeneScores",  workflowVersion), ectyperGeneScores);
-			stringEntries.put(appendVersion("ECTYPER-8-Identities",  workflowVersion), ectyperIdentities);
-			stringEntries.put(appendVersion("ECTYPER-9-Coverages",  workflowVersion), ectyperCoverages);
-			stringEntries.put(appendVersion("ECTYPER-10-Database",  workflowVersion), ectyperDatabase);
-			stringEntries.put(appendVersion("ECTYPER-11-Warnings",  workflowVersion), ectyperWarningsEntry);
+			metadataEntries.put(appendVersion("ECTYPER-1-Species", workflowVersion), ectyperSpeciesEntry);
+			metadataEntries.put(appendVersion("ECTYPER-2-O-antigen", workflowVersion), ectyperOtypeEntry);
+			metadataEntries.put(appendVersion("ECTYPER-3-H-antigen", workflowVersion), ectyperHtypeEntry);
+			metadataEntries.put(appendVersion("ECTYPER-4-Serotype",  workflowVersion), ectyperSerotypeEntry);
+			metadataEntries.put(appendVersion("ECTYPER-5-QCFlag",    workflowVersion), ectyperQCflagEntry);
+			metadataEntries.put(appendVersion("ECTYPER-6-Evidence Type",  workflowVersion), ectyperEvidenceTypeEntry);
+			metadataEntries.put(appendVersion("ECTYPER-7-GeneScores",  workflowVersion), ectyperGeneScores);
+			metadataEntries.put(appendVersion("ECTYPER-8-Identities",  workflowVersion), ectyperIdentities);
+			metadataEntries.put(appendVersion("ECTYPER-9-Coverages",  workflowVersion), ectyperCoverages);
+			metadataEntries.put(appendVersion("ECTYPER-10-Database",  workflowVersion), ectyperDatabase);
+			metadataEntries.put(appendVersion("ECTYPER-11-Warnings",  workflowVersion), ectyperWarningsEntry);
 
-			Map<MetadataTemplateField, MetadataEntry> metadataMap = metadataTemplateService
-					.getMetadataMap(stringEntries);
-
-			sample.mergeMetadata(metadataMap);
-			sampleService.updateFields(sample.getId(), ImmutableMap.of("metadata", sample.getMetadata()));
+			Set<MetadataEntry> metadataSet = metadataTemplateService.convertMetadataStringsToSet(metadataEntries);
+			sampleService.mergeSampleMetadata(sample,metadataSet);
+		
 		} catch (IOException e) {
 			logger.error("Got IOException", e);
 			throw new PostProcessingException("Error parsing ectyper results", e);
