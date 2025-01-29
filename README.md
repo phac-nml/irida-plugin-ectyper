@@ -1,23 +1,26 @@
 # IRIDA ecTyper Plugin for E.coli serotyping
-This new IRIDA plugin allows deploying ecTyper, a tool for *in silico* E.coli serotyping, in IRIDA platform.
+This new IRIDA plugin allows deploying ECTyper, a tool for *in silico* E.coli typing in IRIDA platform (https://github.com/phac-nml/irida).
 
-The tool *in silico* serotypes E.coli samples and performs species check to discriminate other non-E.coli samples. It can effectively discriminate between E.coli and Shigella and E.albertii.
-This tool is readily installable by the placement of the `*.jar` file (see releases section) in `/etc/irida/plugins` directory. After IRIDA webserver restart, the new pipeline should appear. 
+The ECTYPER IRIDA plugin *in silico* serotypes, pathotypes and detects Shiga toxins in *E.coli* samples from short paired Illumina reads. In addition, the plugin performs species check to discriminate other non-E.coli samples. It can effectively discriminate between *E.coli* and *Shigella* spp. and *E.albertii*.
 
-Version `1.1.1b` is identical to `1.1.1` with the only difference that it is fully compatible with `IRIDA v21.01`.
+This tool is readily installable by the placement of the `*.jar` file (see releases section) in `/etc/irida/plugins` directory and installation of [the dependencies](#dependencies) in the Galaxy server. After IRIDA webserver restart, the new pipeline should appear. 
+
+
 # Features
-New to version `1.0.0` and `1.1.1b`
+New to version `2.0.0`
 
-* Quality Control module for easier assesement of results reliability and the need of any further wet-lab followup for reporting purposes
-* Automatic project metadata population for easier download and pulling via API or as a tab-delimited file
-* Automatic assembly of paired reads (Illumina platform for now) and typing. Platform indendent version could be implmented by workflow update
-* New report with information on `%identity`, `%coverage`, more detailed quality control flags and database version
+* Improved species identification module thanks to custom species sketch and GTDB database
+* Pathotyping of E.coli
+* Shiga toxin subtyping including muliple copies
+* Detection of  enterohemolysin A ehxA
+further wet-lab followup for reporting purposes
 * Other minor improvements
 
 
 # Building plugin
 
-Building and packaging this code is accomplished using [Apache Maven](http://maven.apache.org/download.cgi). However, you will first need to install [IRIDA](https://github.com/phac-nml/irida) to your local Maven repository. The version of IRIDA you install will have to correspond to the version found in the `irida.version.compiletime` property in the [pom.xml](https://github.com/phac-nml/irida-plugin-ectyper/blob/master/pom.xml) file of this project. Right now, this is IRIDA version `19.01.3`. To build successfully plugin there is a need to compile IRIDA corresponding to the version specified in `pom.xml`. 
+Building and packaging this code is accomplished using [Apache Maven](http://maven.apache.org/download.cgi) with version >3.6.3. However, you will first need to install [IRIDA](https://github.com/phac-nml/irida) to your local Maven repository via `mvn install -DskipTests` command. The version of IRIDA you install will have to correspond to the version found in the `irida.version.compiletime` property in the [pom.xml](https://github.com/phac-nml/irida-plugin-ectyper/blob/master/pom.xml) file of this project. Right now, the recommended version to compile plugin is IRIDA version `22.05`. To build successfully plugin there is a need to compile IRIDA corresponding to the version specified in the `pom.xml` file. 
+
 Here is a brief workflow to compile new `*.jar` file from the source code 
 
 ```bash
@@ -41,10 +44,10 @@ Below you will find more detailed explanations of each step above.
 The following dependencies are required in order to make use of this plugin.
 
 * IRIDA >= 19.01.3
-* Java >= 1.8 and Maven >= 3.3.9 (for building dependencies)
+* Java == 11 and Maven >= 3.6.3 (for building dependencies)
 * Galaxy >= 16.01
 * Shovill == 1.0.4
-* ECTYPER == 1.0.0
+* ECTYPER == 2.0.0
 
 # Galaxy configuration
 The plugin assumes a properly configured Galaxy instance that will run the workflow included in the plugin.
@@ -57,11 +60,11 @@ For this version of the plugin, the backend Galaxy instance needs to have the fo
   * [ToolShed direct link](https://toolshed.g2.bx.psu.edu/view/iuc/shovill/865119fcb694)
 
   
-* ECTyper v1.0.0
-  * version 1.0.0
-  * revision 4:08d801182fa1
-  * published 2020-05-29
-  * [ToolShed direct link](https://toolshed.g2.bx.psu.edu/view/nml/ectyper/08d801182fa1)
+* ECTyper v2.0.0
+  * version 2.0.0
+  * revision 6:9cd096bee567
+  * published 2024-12-30
+  * [ToolShed direct link](https://toolshed.g2.bx.psu.edu/view/nml/ectyper/9cd096bee567)
 
 # Gallery
 A couple of illustrations demonstrating plugin in action.

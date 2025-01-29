@@ -20,7 +20,7 @@ import ca.corefacility.bioinformatics.irida.service.workflow.IridaWorkflowsServi
 
 public class ECTyperPlugin extends Plugin {
 
-	public static AnalysisType ECTYPER = new AnalysisType("ECTYPER");
+	public static AnalysisType ECTYPER = new AnalysisType("ECTYPER-PLUGIN");
 
 	public ECTyperPlugin(PluginWrapper wrapper) {
 		super(wrapper);
