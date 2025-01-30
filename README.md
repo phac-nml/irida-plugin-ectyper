@@ -9,7 +9,7 @@ This tool is readily installable by the placement of the `*.jar` file (see relea
 # Features
 New to version `2.0.0`
 
-* Improved species identification module thanks to custom species sketch and [GTDB database](https://gtdb.ecogenomic.org/)
+* Improved species identification module thanks to the [custom species ID sketch](https://zenodo.org/records/13969103) and [GTDB database](https://gtdb.ecogenomic.org/)
 * Pathotyping of E.coli
 * Shiga toxin subtyping including multiple copies per sample
 * Detection of  enterohemolysin A `ehxA` gene
