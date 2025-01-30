@@ -20,7 +20,7 @@ import ca.corefacility.bioinformatics.irida.service.workflow.IridaWorkflowsServi
 
 public class ECTyperPlugin extends Plugin {
 
-	public static AnalysisType ECTYPER = new AnalysisType("ECTYPER");
+	public static AnalysisType ECTYPER = new AnalysisType("ECTYPER-PLUGIN");
 
 	public ECTyperPlugin(PluginWrapper wrapper) {
 		super(wrapper);
@@ -47,7 +47,7 @@ public class ECTyperPlugin extends Plugin {
 
 		@Override
 		public UUID getDefaultWorkflowUUID() {
-			return UUID.fromString("79872edb-4f3b-4a51-aff7-33ddbc05ec5e");
+			return UUID.fromString("e4402b62-1757-4494-93c2-3558996725fb");
 		}
 
 		@Override
