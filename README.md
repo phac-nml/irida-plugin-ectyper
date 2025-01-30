@@ -9,12 +9,12 @@ This tool is readily installable by the placement of the `*.jar` file (see relea
 # Features
 New to version `2.0.0`
 
-* Improved species identification module thanks to custom species sketch and GTDB database
+* Improved species identification module thanks to custom species sketch and [GTDB database](https://gtdb.ecogenomic.org/)
 * Pathotyping of E.coli
-* Shiga toxin subtyping including muliple copies
-* Detection of  enterohemolysin A ehxA
-further wet-lab followup for reporting purposes
-* Other minor improvements
+* Shiga toxin subtyping including multiple copies per sample
+* Detection of  enterohemolysin A `ehxA` gene
+* Other minor improvements including support for compressed `gz` files
+* Almost all ECTYPER report fields are reported and more simpler field update code structure for simpler code new fields addition and updates
 
 
 # Building plugin
